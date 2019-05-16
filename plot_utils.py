@@ -181,7 +181,6 @@ def plot_cluster_comparison(played_decks, clustering_data: List, labels_true, fu
     :param seed: random seed of the MultiDimensionalScaling
     """
     n_datapoints = len(played_decks)
-    scattersize = [25] * len(played_decks)
     markers = ['o'] * len(played_decks)
 
     for alg_dict in clustering_data:
@@ -205,7 +204,6 @@ def plot_cluster_comparison(played_decks, clustering_data: List, labels_true, fu
             played_decks.append(cluster.centroid())
             if debug:
                 print("Centroid: " + str(cluster.centroid()))
-            scattersize.append(70)
             markers.append('^')
             alg_dict["indices"].append(len(markers)-1)
 
@@ -213,7 +211,6 @@ def plot_cluster_comparison(played_decks, clustering_data: List, labels_true, fu
             played_decks.append(cluster.core())
             if debug:
                 print("Core: " + str(cluster.core()))
-            scattersize.append(30)
             markers.append('s')
             alg_dict["indices"].append(len(markers) - 1)
 
@@ -233,7 +230,7 @@ def plot_cluster_comparison(played_decks, clustering_data: List, labels_true, fu
     for m, c, _x, _y in zip(['o']*len(deck_transformed), [get_cmap("tab20").colors[colormap[c]] for c in labels_true],
                             deck_transformed[:n_datapoints, 0],
                             deck_transformed[:n_datapoints, 1]):
-        ax1.plot(_x, _y, 'o', markersize=5, markerfacecolor=c, marker=m,
+        ax1.plot(_x, _y, 'o', markersize=9, markerfacecolor=c, marker=m,
                  markeredgewidth=0.5, markeredgecolor=(0, 0, 0, 1))
 
     ax1.set_ylim([-0.65, 0.65])
@@ -246,7 +243,7 @@ def plot_cluster_comparison(played_decks, clustering_data: List, labels_true, fu
                                 list(alg_dict["labels"]) + list(range(13)) + list(range(13)),
                                 deck_transformed[alg_dict["indices"], 0],
                                 deck_transformed[alg_dict["indices"], 1]):
-            ax2.plot(_x, _y, 's', markersize=5, markerfacecolor=get_cmap("tab20").colors[c], marker=m,
+            ax2.plot(_x, _y, 's', markersize=9, markerfacecolor=get_cmap("tab20").colors[c], marker=m,
                      markeredgewidth=0.7 if m == '^' else 0.5, markeredgecolor=(0, 0, 0, 1))
         ax2.set_title("Complete Linkage Clustering")
         ax2.set_ylim([-0.65, 0.65])
